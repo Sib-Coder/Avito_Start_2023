@@ -5,3 +5,6 @@ type User struct {
 	Name     string
 	Sameinfo string
 }
+type Slug struct {
+	Name string
+}

@@ -9,7 +9,8 @@ create table users
 create table slug
 (
     id_slug        UUID primary key default gen_random_uuid(),
-    name_slug      varchar(100) not null
+    name_slug      varchar(100) not null,
+    CONSTRAINT slugnickunicum UNIQUE (name_slug)
 
 ) ;
 
@@ -17,7 +18,8 @@ create table slugtraker
 (
     id       UUID primary key default gen_random_uuid(),
     id_user uuid  REFERENCES users (id_user),
-    id_slug uuid  REFERENCES slug (id_slug)
+    id_slug uuid  REFERENCES slug (id_slug),
+    CONSTRAINT newtrakerconstrain UNIQUE  (id_user,id_slug)
 
 ) ;
 

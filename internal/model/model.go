@@ -6,5 +6,6 @@ type User struct {
 	Sameinfo string
 }
 type Slug struct {
+	Id   string
 	Name string
 }

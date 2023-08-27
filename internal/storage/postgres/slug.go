@@ -57,18 +57,43 @@ func (db *Database) ExecIdSlug(name string) (string, error) {
 	return id, err
 }
 
-// TODO наложить уникальность на имя slug и на сочетание id_slug и id_user
-func (db *Database) CreateRelation(iduser string, idslug string) (bool, error) {
-	_, err := db.db.Exec("INSERT INTO slugtraker (id_user, id_slug) VALUES ($1,$2);", iduser, idslug)
-	if err != nil {
-		return false, err
-	}
-	return true, err
-}
 func (db *Database) DeleteRelation(iduser string, name string) (bool, error) {
 	_, err := db.db.Exec("DELETE FROM slugtraker WHERE id_user = $1 AND id_slug IN (SELECT slug.id_slug from slug where name_slug=$2);", iduser, name)
 	if err != nil {
 		return false, err
 	}
 	return true, err
+}
+
+func (db *Database) CreateRelation(iduser string, name string) (bool, error) {
+	tx, err := db.db.Beginx()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	stmt, err := tx.Prepare("SELECT id_slug from slug where name_slug =$1;")
+	if err != nil {
+		fmt.Println("error: %v\n", err)
+	}
+	id_slug := ""
+	err = stmt.QueryRow(name).Scan(&id_slug)
+	if err != nil {
+		tx.Rollback()
+		fmt.Println(err)
+	}
+	fmt.Println("ID_SLUG:", id_slug)
+
+	_, err = tx.Exec("INSERT INTO slugtraker (id_user, id_slug) VALUES ($1,$2);", iduser, id_slug)
+	if err != nil {
+		tx.Rollback()
+		fmt.Println(err)
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		fmt.Println(err)
+		return false, err
+	} else {
+		return true, err
+	}
 }

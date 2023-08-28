@@ -1,6 +1,9 @@
 package service
 
-import "avitoStart/internal/model"
+import (
+	"avitoStart/internal/model"
+	"fmt"
+)
 
 type Database interface {
 	//users
@@ -27,15 +30,16 @@ func New(db Database) *Service {
 
 // work with users
 func (s *Service) AddUser(user model.User) (bool, error) {
-	res, err := s.AddUser(user)
+	fmt.Println("User:", user)
+	res, err := s.db.AddUser(user)
 	if err != nil {
-		return res, err
+		return false, err
 	}
 	return res, err
 }
 
 func (s *Service) DeleteUser(id string) (bool, error) {
-	res, err := s.DeleteUser(id)
+	res, err := s.db.DeleteUser(id)
 	if err != nil {
 		return res, err
 	}
@@ -43,7 +47,7 @@ func (s *Service) DeleteUser(id string) (bool, error) {
 }
 
 func (s *Service) ExtractUsers() ([]model.User, error) {
-	res, err := s.ExtractUsers()
+	res, err := s.db.ExtractUsers()
 	if err != nil {
 		return res, err
 	}
@@ -53,7 +57,7 @@ func (s *Service) ExtractUsers() ([]model.User, error) {
 //work with slug
 
 func (s *Service) DeleteSlug(name string) (bool, error) {
-	res, err := s.DeleteSlug(name)
+	res, err := s.db.DeleteSlug(name)
 	if err != nil {
 		return res, err
 	}
@@ -61,7 +65,7 @@ func (s *Service) DeleteSlug(name string) (bool, error) {
 }
 
 func (s *Service) CreateSlug(name string) (bool, error) {
-	res, err := s.CreateSlug(name)
+	res, err := s.db.CreateSlug(name)
 	if err != nil {
 		return res, err
 	}
@@ -69,7 +73,7 @@ func (s *Service) CreateSlug(name string) (bool, error) {
 }
 
 func (s *Service) ExecSlugNamesUser(iduser string) ([]model.Slug, error) {
-	res, err := s.ExecSlugNamesUser(iduser)
+	res, err := s.db.ExecSlugNamesUser(iduser)
 	if err != nil {
 		return res, err
 	}

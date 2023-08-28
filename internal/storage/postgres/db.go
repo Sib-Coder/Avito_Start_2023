@@ -17,7 +17,7 @@ func New(dsn string) (*Database, error) {
 		fmt.Println("DataBase NOT WORK")
 		return nil, err
 	}
-
+	fmt.Println("DataBase Work")
 	return &Database{
 		db: db,
 	}, nil

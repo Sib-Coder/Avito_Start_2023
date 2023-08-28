@@ -1,6 +1,9 @@
 package postgres
 
-import "avitoStart/internal/model"
+import (
+	"avitoStart/internal/model"
+	"fmt"
+)
 
 // получение всех пользователей из бд -готова
 func (db *Database) ExtractUsers() ([]model.User, error) {
@@ -33,6 +36,7 @@ func (db *Database) DeleteUser(id string) (bool, error) {
 func (db *Database) AddUser(user model.User) (bool, error) {
 	_, err := db.db.Exec("insert into users (name, same_info ) values ($1, $2);", user.Name, user.Sameinfo)
 	if err != nil {
+		fmt.Println("Pizdec")
 		return false, err
 	}
 	return true, err

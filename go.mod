@@ -1,4 +1,4 @@
-module Avito_Start_2023
+module avitoStart
 
 go 1.21.0
 

@@ -1,7 +1,7 @@
 package postgres
 
 import (
-	"Avito_Start_2023/internal/model"
+	"avitoStart/internal/model"
 	"fmt"
 )
 

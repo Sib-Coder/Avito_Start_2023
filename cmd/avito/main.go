@@ -1,8 +1,8 @@
 package main
 
 import (
-	"Avito_Start_2023/internal/model"
-	"Avito_Start_2023/internal/storage/postgres"
+	"avitoStart/internal/model"
+	"avitoStart/internal/storage/postgres"
 	"fmt"
 )
 

@@ -1,6 +1,6 @@
 package postgres
 
-import "Avito_Start_2023/internal/model"
+import "avitoStart/internal/model"
 
 // получение всех пользователей из бд -готова
 func (db *Database) ExtractUsers() ([]model.User, error) {
@@ -17,7 +17,6 @@ func (db *Database) ExtractUsers() ([]model.User, error) {
 		}
 		users = append(users, user)
 	}
-
 	return users, nil
 
 }

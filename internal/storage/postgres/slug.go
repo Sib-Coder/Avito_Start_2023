@@ -41,6 +41,7 @@ func (db *Database) ExecSlugNamesUser(iduser string) ([]model.Slug, error) {
 	return slugs, nil
 }
 
+// TODO Если не надо удалить эту функцию
 func (db *Database) ExecIdSlug(name string) (string, error) {
 	var id string
 	res, err := db.db.Query("SELECT id_slug from slug where name_slug =$1;", name)
@@ -81,8 +82,7 @@ func (db *Database) CreateRelation(iduser string, name string) (bool, error) {
 		tx.Rollback()
 		fmt.Println(err)
 	}
-	fmt.Println("ID_SLUG:", id_slug)
-
+	//fmt.Println("ID_SLUG:", id_slug)
 	_, err = tx.Exec("INSERT INTO slugtraker (id_user, id_slug) VALUES ($1,$2);", iduser, id_slug)
 	if err != nil {
 		tx.Rollback()

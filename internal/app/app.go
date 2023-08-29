@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"github.com/labstack/echo/v4"
 	"log"
+	"os"
 )
 
 type App struct {
@@ -20,8 +21,7 @@ type App struct {
 func New() (*App, error) {
 	app := &App{}
 
-	//dsn := os.Getenv("DSN")
-	dsn := "host='127.0.0.1' port=5432 user=postgres password=postgres dbname=postgres sslmode=disable"
+	dsn := os.Getenv("DSN")
 
 	//инициализации всех параметров через New
 	app.database, _ = postgres.New(dsn)

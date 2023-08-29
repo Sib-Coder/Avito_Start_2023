@@ -74,15 +74,17 @@ func (db *Database) CreateRelation(iduser string, name string) (bool, error) {
 
 	stmt, err := tx.Prepare("SELECT id_slug from slug where name_slug =$1;")
 	if err != nil {
+
 		fmt.Println("error: %v\n", err)
 	}
-	id_slug := ""
+
+	id_slug := " "
 	err = stmt.QueryRow(name).Scan(&id_slug)
 	if err != nil {
 		tx.Rollback()
 		fmt.Println(err)
 	}
-	//fmt.Println("ID_SLUG:", id_slug)
+	fmt.Println("ID_SLUG:", id_slug)
 	_, err = tx.Exec("INSERT INTO slugtraker (id_user, id_slug) VALUES ($1,$2);", iduser, id_slug)
 	if err != nil {
 		tx.Rollback()

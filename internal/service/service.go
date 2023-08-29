@@ -81,23 +81,23 @@ func (s *Service) ExecSlugNamesUser(iduser string) ([]model.Slug, error) {
 }
 
 func (s *Service) MasterFunc(data model.MasterData) (bool, error) {
-	for _, d := range data.MasAdd {
-		fmt.Println(d)
-		_, err := s.db.CreateRelation(data.Id, d)
-		if err != nil {
-			return false, err
+	if data.MasAdd != nil && len(data.MasAdd) > 0 {
+		for _, d := range data.MasAdd {
+			fmt.Println(d)
+			_, err := s.db.CreateRelation(data.Id, d)
+			if err != nil {
+				return false, err
+			}
 		}
 	}
-	for _, del := range data.MasDel {
-		fmt.Println(del)
-		_, err := s.db.DeleteRelation(data.Id, del)
-		if err != nil {
-			return false, err
+	if data.MasDel != nil && len(data.MasDel) > 0 {
+		for _, del := range data.MasDel {
+			fmt.Println(del)
+			_, err := s.db.DeleteRelation(data.Id, del)
+			if err != nil {
+				return false, err
+			}
 		}
 	}
 	return true, nil
 }
-
-//big logical func
-//DeleteRelation(iduser string, name string) (bool, error)
-//CreateRelation(iduser string, name string) (bool, error)

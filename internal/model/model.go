@@ -1,16 +1,17 @@
 package model
 
 type User struct {
-	Id       string
+	Id       string `json:"Id"`
 	Name     string `json:"Name"`
 	Sameinfo string `json:"Sameinfo"`
 }
 type Slug struct {
 	Name string
 }
-type UserQuery struct {
-	ID string `query:"id"`
-}
+
+//type UserQuery struct {
+//	ID string `query:"id"`
+//}
 
 type MasterData struct {
 	Id     string   `json:"Id"`
@@ -18,5 +19,5 @@ type MasterData struct {
 	MasDel []string `json:"MasDel"`
 }
 type SlugQuery struct {
-	Name string `query:"name"`
+	Name string `json:"Name"`
 }

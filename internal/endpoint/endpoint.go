@@ -46,13 +46,13 @@ func (e *Endpoint) AddUser(ctx echo.Context) error {
 }
 
 func (e *Endpoint) DeleteUser(ctx echo.Context) error {
-	var user model.UserQuery
+	var user model.User
 	err := ctx.Bind(&user)
 	if err != nil {
 		return ctx.String(http.StatusBadRequest, "bad request")
 	}
 	fmt.Println(user)
-	res, err := e.s.DeleteUser(user.ID)
+	res, err := e.s.DeleteUser(user.Id)
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, err)
 	}
@@ -93,13 +93,13 @@ func (e *Endpoint) CreateSlug(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, res)
 }
 func (e *Endpoint) ExecSlugNamesUser(ctx echo.Context) error {
-	var user model.UserQuery
+	var user model.User
 	err := ctx.Bind(&user)
 	if err != nil {
 		return ctx.String(http.StatusBadRequest, "bad request")
 	}
 	fmt.Println(user)
-	res, err := e.s.ExecSlugNamesUser(user.ID)
+	res, err := e.s.ExecSlugNamesUser(user.Id)
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, err)
 	}

@@ -30,14 +30,15 @@ func New() (*App, error) {
 	app.echo = echo.New()
 
 	//endpoints
-	app.echo.POST("/user", app.endpoint.AddUser)
-	app.echo.GET("/user", app.endpoint.ExtractUsers)
-	app.echo.DELETE("/user", app.endpoint.DeleteUser)
+	app.echo.POST("/create_user", app.endpoint.AddUser)
+	app.echo.POST("/delete_user", app.endpoint.DeleteUser)
+	app.echo.GET("/users", app.endpoint.ExtractUsers)
+
 	//slug
-	app.echo.GET("/slug", app.endpoint.CreateSlug)
-	app.echo.DELETE("/slug", app.endpoint.DeleteSlug)
+	app.echo.POST("/create_slug", app.endpoint.CreateSlug)
+	app.echo.POST("/delete_slug", app.endpoint.DeleteSlug)
 	//masterfunc
-	app.echo.GET("/master", app.endpoint.ExecSlugNamesUser)
+	app.echo.POST("/slugs_user", app.endpoint.ExecSlugNamesUser)
 	app.echo.POST("/master", app.endpoint.MasterFunc)
 
 	return app, nil

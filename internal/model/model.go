@@ -11,3 +11,12 @@ type Slug struct {
 type UserQuery struct {
 	ID string `query:"id"`
 }
+
+type MasterData struct {
+	Id     string   `json:"Id"`
+	MasAdd []string `json:"MasAdd"`
+	MasDel []string `json:"MasDel"`
+}
+type SlugQuery struct {
+	Name string `query:"name"`
+}

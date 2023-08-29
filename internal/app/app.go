@@ -33,6 +33,12 @@ func New() (*App, error) {
 	app.echo.POST("/user", app.endpoint.AddUser)
 	app.echo.GET("/user", app.endpoint.ExtractUsers)
 	app.echo.DELETE("/user", app.endpoint.DeleteUser)
+	//slug
+	app.echo.GET("/slug", app.endpoint.CreateSlug)
+	app.echo.DELETE("/slug", app.endpoint.DeleteSlug)
+	//masterfunc
+	app.echo.GET("/master", app.endpoint.ExecSlugNamesUser)
+	app.echo.POST("/master", app.endpoint.MasterFunc)
 
 	return app, nil
 }

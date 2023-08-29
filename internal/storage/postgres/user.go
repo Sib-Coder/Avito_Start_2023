@@ -5,7 +5,6 @@ import (
 	"fmt"
 )
 
-// получение всех пользователей из бд -готова
 func (db *Database) ExtractUsers() ([]model.User, error) {
 	var user model.User
 	var users []model.User

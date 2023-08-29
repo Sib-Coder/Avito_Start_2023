@@ -9,10 +9,6 @@ type Slug struct {
 	Name string
 }
 
-//type UserQuery struct {
-//	ID string `query:"id"`
-//}
-
 type MasterData struct {
 	Id     string   `json:"Id"`
 	MasAdd []string `json:"MasAdd"`

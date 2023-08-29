@@ -41,23 +41,6 @@ func (db *Database) ExecSlugNamesUser(iduser string) ([]model.Slug, error) {
 	return slugs, nil
 }
 
-// TODO Если не надо удалить эту функцию
-func (db *Database) ExecIdSlug(name string) (string, error) {
-	var id string
-	res, err := db.db.Query("SELECT id_slug from slug where name_slug =$1;", name)
-	if err != nil {
-		return " ", err
-	}
-	for res.Next() {
-		err = res.Scan(&id)
-		if err != nil {
-			return " ", err
-		}
-		//проверка на существование
-	}
-	return id, err
-}
-
 func (db *Database) DeleteRelation(iduser string, name string) (bool, error) {
 	_, err := db.db.Exec("DELETE FROM slugtraker WHERE id_user = $1 AND id_slug IN (SELECT slug.id_slug from slug where name_slug=$2);", iduser, name)
 	if err != nil {

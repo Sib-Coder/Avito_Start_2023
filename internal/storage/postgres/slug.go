@@ -2,28 +2,28 @@ package postgres
 
 import (
 	"avitoStart/internal/model"
-	"fmt"
+	"log"
 )
 
 func (db *Database) DeleteSlug(name string) (bool, error) {
 	tx, err := db.db.Beginx()
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
 	_, err = tx.Exec("DELETE FROM slugtraker WHERE id_slug IN (SELECT slug.id_slug from slug where name_slug=$1);", name)
 	if err != nil {
 		tx.Rollback()
-		fmt.Println(err)
+		log.Println(err)
 	}
 	_, err = tx.Exec("DELETE FROM slug where name_slug = $1;", name)
 	if err != nil {
 		tx.Rollback()
-		fmt.Println(err)
+		log.Println(err)
 	}
 
 	err = tx.Commit()
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return false, err
 	} else {
 		return true, err
@@ -44,12 +44,12 @@ func (db *Database) ExecSlugNamesUser(iduser string) ([]model.Slug, error) {
 	res, err := db.db.Query("SELECT name_slug from slugtraker JOIN public.slug s on s.id_slug = slugtraker.id_slug where id_user =$1;", iduser)
 	if err != nil {
 		return nil, err
-		fmt.Println(err)
+		log.Println(err)
 	}
 	for res.Next() {
 		err = res.Scan(&slug.Name)
 		if err != nil {
-			fmt.Println(err)
+			log.Println(err)
 			return nil, err
 		}
 		slugs = append(slugs, slug)
@@ -68,31 +68,31 @@ func (db *Database) DeleteRelation(iduser string, name string) (bool, error) {
 func (db *Database) CreateRelation(iduser string, name string) (bool, error) {
 	tx, err := db.db.Beginx()
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
 
 	stmt, err := tx.Prepare("SELECT id_slug from slug where name_slug =$1;")
 	if err != nil {
 
-		fmt.Println("error: %v\n", err)
+		log.Println("error: %v\n", err)
 	}
 
 	id_slug := " "
 	err = stmt.QueryRow(name).Scan(&id_slug)
 	if err != nil {
 		tx.Rollback()
-		fmt.Println(err)
+		log.Println(err)
 	}
-	fmt.Println("ID_SLUG:", id_slug)
+	log.Println("ID_SLUG:", id_slug)
 	_, err = tx.Exec("INSERT INTO slugtraker (id_user, id_slug) VALUES ($1,$2);", iduser, id_slug)
 	if err != nil {
 		tx.Rollback()
-		fmt.Println(err)
+		log.Println(err)
 	}
 
 	err = tx.Commit()
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return false, err
 	} else {
 		return true, err

@@ -5,7 +5,6 @@ import (
 	"avitoStart/internal/service"
 	"avitoStart/internal/storage/postgres"
 	"errors"
-	"fmt"
 	"github.com/labstack/echo/v4"
 	"log"
 	"os"
@@ -44,7 +43,7 @@ func New() (*App, error) {
 	return app, nil
 }
 func (a *App) Run() error {
-	fmt.Println("Server Runnig")
+	log.Println("Server Runnig")
 
 	err := a.echo.Start(":8090")
 	if err != nil {

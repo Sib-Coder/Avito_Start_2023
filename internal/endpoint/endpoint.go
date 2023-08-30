@@ -2,8 +2,8 @@ package endpoint
 
 import (
 	"avitoStart/internal/model"
-	"fmt"
 	"github.com/labstack/echo/v4"
+	"log"
 	"net/http"
 )
 
@@ -37,7 +37,7 @@ func (e *Endpoint) AddUser(ctx echo.Context) error {
 	if err != nil {
 		return ctx.String(http.StatusBadRequest, "bad request")
 	}
-	fmt.Println(user)
+	log.Println(user)
 	res, err := e.s.AddUser(user)
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, err)
@@ -51,7 +51,7 @@ func (e *Endpoint) DeleteUser(ctx echo.Context) error {
 	if err != nil {
 		return ctx.String(http.StatusBadRequest, "bad request")
 	}
-	fmt.Println(user)
+	log.Println(user)
 	res, err := e.s.DeleteUser(user.Id)
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, err)
@@ -71,7 +71,7 @@ func (e *Endpoint) DeleteSlug(ctx echo.Context) error {
 	if err != nil {
 		return ctx.String(http.StatusBadRequest, "bad request")
 	}
-	fmt.Println(name.Name)
+	log.Println(name.Name)
 	res, err := e.s.DeleteSlug(name.Name)
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, err)
@@ -85,7 +85,7 @@ func (e *Endpoint) CreateSlug(ctx echo.Context) error {
 	if err != nil {
 		return ctx.String(http.StatusBadRequest, "bad request")
 	}
-	fmt.Println(name.Name)
+	log.Println(name.Name)
 	res, err := e.s.CreateSlug(name.Name)
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, err)
@@ -98,7 +98,7 @@ func (e *Endpoint) ExecSlugNamesUser(ctx echo.Context) error {
 	if err != nil {
 		return ctx.String(http.StatusBadRequest, "bad request")
 	}
-	fmt.Println(user)
+	log.Println(user)
 	res, err := e.s.ExecSlugNamesUser(user.Id)
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, err)
@@ -112,7 +112,7 @@ func (e *Endpoint) MasterFunc(ctx echo.Context) error {
 	if err != nil {
 		return ctx.String(http.StatusBadRequest, "bad request")
 	}
-	fmt.Println(data)
+	log.Println(data)
 	res, err := e.s.MasterFunc(data)
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, err)

@@ -3,6 +3,7 @@ package service
 import (
 	"avitoStart/internal/model"
 	"fmt"
+	"log"
 )
 
 type Database interface {
@@ -83,7 +84,7 @@ func (s *Service) ExecSlugNamesUser(iduser string) ([]model.Slug, error) {
 func (s *Service) MasterFunc(data model.MasterData) (bool, error) {
 	if data.MasAdd != nil && len(data.MasAdd) > 0 {
 		for _, d := range data.MasAdd {
-			fmt.Println(d)
+			log.Println(d)
 			_, err := s.db.CreateRelation(data.Id, d)
 			if err != nil {
 				return false, err
@@ -92,7 +93,7 @@ func (s *Service) MasterFunc(data model.MasterData) (bool, error) {
 	}
 	if data.MasDel != nil && len(data.MasDel) > 0 {
 		for _, del := range data.MasDel {
-			fmt.Println(del)
+			log.Println(del)
 			_, err := s.db.DeleteRelation(data.Id, del)
 			if err != nil {
 				return false, err

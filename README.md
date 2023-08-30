@@ -9,7 +9,7 @@ sudo docker-compose build --no-cache
 sudo docker-compose up   
 ```
 
-![dockerstart](https://github.com/Sib-Coder/avitoStart/tree/main/images/startdoker.png)
+![dockerstart](https://github.com/Sib-Coder/avitoStart/blob/main/images/startdoker.png)
 
 
 ## Документация по API находится https://documenter.getpostman.com/view/24934668/2s9Y5bNfhd

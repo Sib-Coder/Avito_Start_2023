@@ -24,8 +24,24 @@ func (db *Database) ExtractUsers() ([]model.User, error) {
 }
 
 func (db *Database) DeleteUser(id string) (bool, error) {
-	_, err := db.db.Exec("DELETE FROM users WHERE id_user=$1", id)
+	tx, err := db.db.Beginx()
 	if err != nil {
+		log.Println(err)
+	}
+	_, err = tx.Exec("DELETE FROM slugtraker WHERE id_user = $1;", id)
+	if err != nil {
+		tx.Rollback()
+		log.Println(err)
+	}
+	_, err = tx.Exec("DELETE FROM users WHERE id_user=$1", id)
+	if err != nil {
+		tx.Rollback()
+		log.Println(err)
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		log.Println(err)
 		return false, err
 	} else {
 		return true, err

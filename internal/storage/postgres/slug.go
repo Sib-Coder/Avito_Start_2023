@@ -6,8 +6,24 @@ import (
 )
 
 func (db *Database) DeleteSlug(name string) (bool, error) {
-	_, err := db.db.Exec("DELETE FROM slug where name_slug = $1;", name)
+	tx, err := db.db.Beginx()
 	if err != nil {
+		fmt.Println(err)
+	}
+	_, err = tx.Exec("DELETE FROM slugtraker WHERE id_slug IN (SELECT slug.id_slug from slug where name_slug=$1);", name)
+	if err != nil {
+		tx.Rollback()
+		fmt.Println(err)
+	}
+	_, err = tx.Exec("DELETE FROM slug where name_slug = $1;", name)
+	if err != nil {
+		tx.Rollback()
+		fmt.Println(err)
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		fmt.Println(err)
 		return false, err
 	} else {
 		return true, err
